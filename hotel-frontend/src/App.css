@@ -1,0 +1,99 @@
+.cushier{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/public/imagenes/cushier.jpg'); /* Ruta de tu imagen */
+  background-size: cover; /* Asegura que la imagen cubra toda la ventana */
+  background-position: center; /* Centra la imagen */
+  z-index: -11; /* Coloca la imagen detrás del contenido */
+}
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/public/imagenes/cushier.jpg'); /* Ruta de tu imagen */
+  background-size: cover; /* Asegura que la imagen cubra toda la ventana */
+  background-position: center; /* Centra la imagen */
+  z-index: -1; /* Coloca la imagen detrás del contenido */
+}
+.fullscreen-bg2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/public/imagenes/paraHabitaciones.jpg'); /* Ruta de tu imagen */
+  background-size: cover; /* Asegura que la imagen cubra toda la ventana */
+  background-position: center; /* Centra la imagen */
+  z-index: -1; /* Coloca la imagen detrás del contenido */}
+.texto{background-color: #cccccc48 !important;
+  border-color: slategray!important;
+  border-radius: 30px !important;
+  width: 80% !important;
+  padding: 10px !important;
+  border-width: 0px !important;
+  margin-bottom:20px !important;}
+.titulo{ 
+  color: #deb887 !important;
+  font-size: 2.5rem !important;
+  font-Family: 'Arial, sans-serif'!important;
+  text-align: center !important;
+ }
+ .titulo2{ 
+  color: 'black' !important;
+  font-size: 2.5rem !important;
+  font-Family: 'Arial, sans-serif'!important;
+  text-align: center !important;
+ }
+ .titulo3{ 
+  color: #d71a1d !important;
+  font-size: 2.5rem !important;
+  font-Family: 'Arial, sans-serif'!important;
+  text-align: center !important;
+ }
+ .estiloTexfile{
+  width: '80%'!important;
+  border-width: '0px'!important;
+  margin-bottom: '20px'!important;}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
