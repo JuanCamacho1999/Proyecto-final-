@@ -58,11 +58,11 @@ export const createReservation = async (reservationData) => {
       const { guest_name, room, check_in, check_out, services } = reservationData;
       
       const reservationPayload = {
-        guest: guest_name,  
+        guest: reservationData.guest_id,  // Asegúrate de que se envíe el ID del huésped
         room,
         check_in,
         check_out,
-        services: services.map(service => service.id), 
+        services: services.map(service => service.id),
       };
   
       const response = await api.post('reservations/', reservationPayload);

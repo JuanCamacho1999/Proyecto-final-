@@ -26,32 +26,38 @@ class AdditionalServiceViewSet(viewsets.ModelViewSet):
     queryset = AdditionalService.objects.all()
     serializer_class = AdditionalServiceSerializer
 
+from rest_framework.filters import SearchFilter
+
 class GuestViewSet(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['name']  # Permite buscar por nombre
+
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
-    def create(self, request, *args, **kwargs):
-        guest_name = request.data.get('guest_name')
-        try:
-            guest = Guest.objects.get(name=guest_name)  
-            reservation_data = {
-                'guest': guest.id,  
-                'room': request.data.get('room'),
-                'check_in': request.data.get('check_in'),
-                'check_out': request.data.get('check_out'),
-                'services': request.data.get('services', []),
-            }
-            serializer = self.get_serializer(data=reservation_data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Guest.DoesNotExist:
-            return Response({'error': 'Huésped no encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+def create(self, request, *args, **kwargs):
+    guest_id = request.data.get('guest')  # Usar guest_id directamente
+    try:
+        guest = Guest.objects.get(id=guest_id)  # Buscar huésped por ID
+        reservation_data = {
+            'guest': guest.id,
+            'room': request.data.get('room'),
+            'check_in': request.data.get('check_in'),
+            'check_out': request.data.get('check_out'),
+            'services': request.data.get('services', []),
+        }
+        serializer = self.get_serializer(data=reservation_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Guest.DoesNotExist:
+        return Response({'error': 'Huésped no encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+
         
     @action(detail=False, methods=['get'])
     def available_reservations(self, request):
