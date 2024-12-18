@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getRooms, getServices, createReservation, searchGuestByName } from '../services/api';
 import { Container, TextField, Button, MenuItem, Select, InputLabel, FormControl, Typography, CircularProgress, Alert } from '@mui/material';
-import imagenProfile from "../assets/sala.jpg";
+import imagenProfile from "../assets/sala.jpg";  // Image from CustomerPage
 
 const ReceptionistPage = () => {
   const [rooms, setRooms] = useState([]);
@@ -43,24 +43,24 @@ const ReceptionistPage = () => {
   // Nueva implementación de handleGuestNameChange
   const handleGuestNameChange = async (e) => {
     const guestName = e.target.value;
-    setReservation((prev) => ({ ...prev, guest_name: guestName }));  // Usar función de actualización
-  
+    setReservation((prev) => ({ ...prev, guest_name: guestName }));
+ 
     try {
-      if (guestName.trim() !== '') {
-        const guest = await searchGuestByName(guestName);
-        if (guest) {
-          setReservation((prev) => ({ ...prev, guest_id: guest.id }));  // Asegurarte de actualizar correctamente el guest_id
+        if (guestName.trim() !== '') {
+            const guest = await searchGuestByName(guestName);
+            if (guest) {
+                setReservation((prev) => ({ ...prev, guest_id: guest.id }));
+            } else {
+                setReservation((prev) => ({ ...prev, guest_id: '' }));
+                alert('Huésped no encontrado');
+            }
         } else {
-          setReservation((prev) => ({ ...prev, guest_id: '' }));
-          alert('Huésped no encontrado');
+            setReservation((prev) => ({ ...prev, guest_id: '' }));
         }
-      } else {
-        setReservation((prev) => ({ ...prev, guest_id: '' }));
-      }
     } catch (err) {
-      console.error('Error al buscar huésped:', err);
+        console.error('Error al buscar huésped:', err);
     }
-  };
+};
   
 
   const handleSubmitReservation = async () => {
@@ -75,25 +75,27 @@ const ReceptionistPage = () => {
   };
 
   return (
-    <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div className="col-md-6" style={{ padding: '20px' }}>
-        <Typography variant="h4" className='titulo'>Registrar Reservación</Typography>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      {/* Formulario de registro a la izquierda */}
+      <div style={{ padding: '20px', width: '50%' }}>
+        <Typography variant="h4" className='titulo' style={{ color: '#fff', marginBottom: '20px' }}>
+          Registrar Reservación
+        </Typography>
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error}</Alert>}
 
         <TextField
           label="Nombre del Huésped"
-          InputLabelProps={{
-            style: { color: 'white' } // Estilo del label
-          }} 
+          InputLabelProps={{ style: { color: 'white' } }}
           value={reservation.guest_name}
-          onChange={handleGuestNameChange} // Llamar a la función para actualizar el nombre y buscar al huésped
+          onChange={handleGuestNameChange} 
           fullWidth
+          margin="normal"
         />
 
-        <FormControl fullWidth>
-          <InputLabel style={{color: 'white'}}>Habitación</InputLabel>
+        <FormControl fullWidth margin="normal">
+          <InputLabel style={{ color: 'white' }}>Habitación</InputLabel>
           <Select
             value={reservation.room}
             onChange={(e) => setReservation({ ...reservation, room: e.target.value })}
@@ -110,32 +112,41 @@ const ReceptionistPage = () => {
 
         <TextField
           label="Fecha de Check-In"
-          InputLabelProps={{
-            style: { color: 'white' } // Estilo del label
-          }} 
+          InputLabelProps={{ style: { color: 'white' } }}
           type="date"
           value={reservation.check_in}
           onChange={(e) => setReservation({ ...reservation, check_in: e.target.value })}
           fullWidth
+          margin="normal"
         />
+
         <TextField
           label="Fecha de Check-Out"
-          InputLabelProps={{
-            style: { color: 'white' } // Estilo del label
-          }} 
+          InputLabelProps={{ style: { color: 'white' } }}
           type="date"
           value={reservation.check_out}
           onChange={(e) => setReservation({ ...reservation, check_out: e.target.value })}
           fullWidth
+          margin="normal"
         />
 
-        <Button onClick={handleSubmitReservation} variant="contained">Registrar Reservación</Button>
+        <Button onClick={handleSubmitReservation} variant="contained" style={{ marginTop: '20px' }}>
+          Registrar Reservación
+        </Button>
       </div>
-      <div className="col-md-6" style={{ padding: '0px' }}>
-        <img src={imagenProfile }  className='.estilo-profile' alt='' style={{'borderRadius':'150px', 'height': '750px','width': '900px'}} />          
-      </div>
+
+      {/* Imagen a la derecha */}
+      <div style={{
+        width: '50%',
+        backgroundImage: `url(${imagenProfile})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        borderRadius: '0 30px 30px 0',
+        height: '100vh'
+      }} />
     </div>
   );
 };
 
 export default ReceptionistPage;
+
